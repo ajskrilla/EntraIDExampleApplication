@@ -76,7 +76,6 @@ Invoke-RestMethod -Uri "http://localhost:3000/api/auth" -Method Post -Body @{
 } | ConvertTo-Json
 ```
 - This will be an EntraID enterprise application leveraging Client Creds OAUTH2
-- This is what is in SSC as the standard authentication
 
 ## ✨ Features
  Sync Entra ID users and devices
@@ -106,3 +105,4 @@ Invoke-RestMethod -Uri "http://localhost:3000/api/auth" -Method Post -Body @{
 |---------------------|------------------------------|
 | `/api/users`        | Returns all synced users     |
 | `/api/devices`      | Returns all synced devices   |
+
