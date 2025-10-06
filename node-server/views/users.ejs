@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<button id="syncBtn">🔄 Sync Now</button>
+		<div id="syncStatus" style="margin-top: 1rem; color: lightgreen;"></div>
+		<meta charset="UTF-8">
+			<title>Entra ID Users</title>
+			<link rel="stylesheet" href="/styles/style.css">
+</head>
+	<body>
+		<h1>Entra ID Users</h1>
+		<ul>
+			<% users.forEach(user => { %>
+			<li>
+				<strong>
+					<%= user.displayName %>
+				</strong>
+				<br />
+				<small>
+					<%= user.email || user.userPrincipalName %>
+				</small>
+			</li>
+			<% }) %>
+		</ul>
+		<div class="pagination">
+			<% if (currentPage > 1) { %>
+        <a href="/users?page="
+				<%= currentPage - 1 %>">Previous
+			</a>
+			<% } %>
+
+    <% for (var i = 1; i <= totalPages; i++) { %>
+			<% if (i === currentPage) { %>
+            <span>
+				<%= i %>
+			</span>
+			<% } else { %>
+            <a href="/users?page="
+				<%= i %>"><%= i %>
+			</a>
+			<% } %>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/users?page="
+				<%= currentPage + 1 %>">Next
+			</a>
+			<% } %>
+		</div>
+
+		<script>
+			document.getElementById("syncBtn").addEventListener("click", async () => {
+			const statusDiv = document.getElementById("syncStatus");
+			statusDiv.innerText = "Syncing...";
+
+			try {
+			const response = await fetch("https://localhost:7120/api/sync", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" }
+			});
+
+			const data = await response.json();
+
+			if (response.ok) {
+			statusDiv.innerText = data.message || "Sync completed successfully!";
+			} else {
+			statusDiv.innerText = "Sync failed: " + (data.message || response.statusText);
+			}
+			} catch (err) {
+			statusDiv.innerText = "Sync error: " + err.message;
+			}
+			});
+		</script>
+
+
+	</body>
+</html>

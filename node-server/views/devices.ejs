@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+			<title>Entra ID Devices</title>
+			<link rel="stylesheet" href="/styles/style.css">
+</head>
+	<body>
+		<h1>Entra ID Devices</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Display Name</th>
+					<th>OS</th>
+					<th>OS Version</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% devices.forEach(device => { %>
+				<tr>
+					<td>
+						<%= device.displayName %>
+					</td>
+					<td>
+						<%= device.operatingSystem %>
+					</td>
+					<td>
+						<%= device.operatingSystemVersion %>
+					</td>
+				</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</body>
+</html>
